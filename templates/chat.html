@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <title>Flask demo</title>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+        <script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+
+        <script type="text/javascript" charset="utf-8">
+            var socket;
+            $(document).ready(function() {
+
+                socket = io.connect('http://' + document.domain + ':' + location.port);
+
+                socket.on('connect', function() {
+                    socket.emit('joined', {}); // send message back
+                });
+
+                // Calling this with data will render message on screen
+                socket.on('render_message', function(data) {
+                    // do something with message received
+                });
+                           
+            });
+        </script>
+
+    </head>
+    <body>
+
+        <!-- Replace me -->
+            
+    </body>
+</html>
