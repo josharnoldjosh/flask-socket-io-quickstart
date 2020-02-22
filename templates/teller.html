@@ -1,0 +1,89 @@
+<html>
+    <head>
+        <title>Teller</title>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+        <script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+
+        <script type="text/javascript" charset="utf-8">
+
+            // Other variables
+            var game_id = '{{ game_id }}';      
+
+            var socket;
+            $(document).ready(function() {
+
+                socket = io.connect('http://' + document.domain + ':' + location.port);
+
+                socket.on('connect', function() {
+                    
+                });        
+
+                socket.on('display_message', function(data) {                    
+                    if (data["game_id"] == game_id) {     
+
+                        var prefix = data["user_type"] + ": ";
+                        if (data["user_type"] == "Teller") {
+                            prefix = "You: "
+                        }      
+                                      
+                        document.getElementById("chat").value += prefix + data['text'] + '\n\n';
+                        document.getElementById("chat").scrollTop = document.getElementById("chat").scrollHeight;
+                    }                    
+                });        
+
+                // Enter key pressed
+                const node = document.getElementsByClassName("textfield")[0];
+                node.addEventListener("keyup", function(event) {
+                    if (event.key === "Enter") {
+
+                        var txt = document.getElementById('textfield_input').value;
+            
+                        if (txt.length < 250 && txt.length > 2) {
+
+                            document.getElementById('textfield_input').value = "";
+                            socket.emit('message', {'text':txt, 'game_id':game_id, 'user_type':'Teller'});             
+
+                        }else if (txt.length > 250) {
+                            alert("Your message is too long!");
+                        }else{
+                            alert("Your message is too short!");
+                        }                     
+                    }
+                });
+            });
+        </script>
+
+    </head>
+
+    <body>
+
+        <div style="display: flex; flex-direction: column;">
+
+            <div style="display: flex; flex-direction: row; width: 100%; justify-content: center; align-content: center;">
+                <h1 style="font-family: monospace; font-size: 16px; font-weight: 100; color: #3498db">Chat interface</h1>
+            </div>
+
+            <div style="display: flex; flex-direction: row; width: 100%; justify-content: center; align-content: center;">
+                <textarea id="chat" style="width: 500px; height: 400px; margin: 5px; font-size: 18px; font-family: monospace;"></textarea>     
+                <img id="target_image" style="width: 0px; height: 0px; margin: 5px;">               
+            </div>    
+
+            <div style="display: flex; flex-direction: row; width: 100%; justify-content: center; align-content: center;">
+                <input type="text" id="textfield_input" style="margin: 5px; height: 30px; width: 500px;" class="textfield"> 
+            </div>
+
+            <div style="width: 100%; display: flex; justify-content: center; padding-top: 25px;">
+                <button id="new_game" style="height: 40px; width: 130px; background-color: #3498db; text-decoration-color: white; color: white; border-radius: 7px; font-family: monospace; font-size: 16px;">Finish Game</button>
+            </div>
+        </div>    
+            
+    </body>
+</html>
