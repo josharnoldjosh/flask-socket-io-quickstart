@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Flask demo</title>
+        <title>GanDraw</title>
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
         <script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
@@ -17,15 +17,6 @@
             $(document).ready(function() {
 
                 socket = io.connect('http://' + document.domain + ':' + location.port);
-
-                socket.on('connect', function() {
-                    socket.emit('joined', {}); // send message back
-                });
-
-                // Calling this with data will render message on screen
-                socket.on('render_message', function(data) {
-                    // do something with message received
-                });
                            
             });
         </script>
@@ -33,7 +24,7 @@
     </head>
     <body>
 
-        <!-- Replace me -->
+        <p>Welcome to GanDraw!</p>
             
     </body>
 </html>

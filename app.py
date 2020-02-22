@@ -24,5 +24,5 @@ def message_recieved(message):
     
 
 if __name__ == '__main__':
-    """ Run the app. """
+    """ Run the app. """    
     socketio.run(app, port=2000)
