@@ -1,2 +1,2 @@
-heroku ps:scale web=1
+ps:scale web=1
 gunicorn -k eventlet app:app
