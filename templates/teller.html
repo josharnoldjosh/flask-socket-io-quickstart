@@ -20,7 +20,7 @@
             var socket;
             $(document).ready(function() {
 
-                socket = io.connect('https://' + document.domain + ':' + location.port);
+                socket = io.connect('https://' + document.domain + ':' + location.port, {secure: true});
 
                 socket.on('connect', function() {
                     socket.emit('message', {'text':"User connected!", 'game_id':game_id, 'user_type':'Teller'});
