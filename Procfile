@@ -1,1 +1,1 @@
-gunicorn -k gevent -w 1 app:app
+gunicorn -k eventlet app:app
